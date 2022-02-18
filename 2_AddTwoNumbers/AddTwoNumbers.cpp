@@ -8,7 +8,6 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-#include <iostream>
 #include "ListNode.h"
 
 class Solution {
@@ -17,11 +16,11 @@ public:
         ListNode *SolutionNode = nullptr;
         ListNode *CurrentNode1 = l1;
         ListNode *CurrentNode2 = l2;
+        ListNode *CurrentSNode = SolutionNode;
         int currentNum = 0;
         int CarryOut = 0;
         int i = 0;
-        while(!((CurrentNode1 == nullptr)&&(CurrentNode2 == nullptr)&&(CarryOut==0))){
-            ListNode *CurrentN = new ListNode();
+        while(CurrentNode1 || CurrentNode2 || CarryOut){
             if (CurrentNode1 == nullptr){
                 if (CurrentNode2 == nullptr){
                     currentNum = 1;
@@ -37,22 +36,16 @@ public:
                 CurrentNode1 = CurrentNode1->next;
                 CurrentNode2 = CurrentNode2->next;
             }
-            if (currentNum > 9){
-                currentNum = currentNum - 10;
-                CarryOut = 1;
-            } else {
-                CarryOut = 0;
-            }
-            CurrentN->val = currentNum;
+            CarryOut = currentNum / 10;
+            currentNum %= 10;
+            ListNode *CurrentN = new ListNode(currentNum);
             if (SolutionNode == nullptr){
                 SolutionNode = CurrentN;
+                CurrentSNode = SolutionNode;
                 continue;
             }
-            ListNode* CNode = SolutionNode;
-            while (CNode->next != nullptr){
-                CNode = CNode->next;
-            }
-            CNode->next = CurrentN;
+            CurrentSNode ->next = CurrentN;
+            CurrentSNode = CurrentSNode->next;
         }
         return SolutionNode;
     }
