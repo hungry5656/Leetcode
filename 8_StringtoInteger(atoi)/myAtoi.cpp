@@ -3,7 +3,7 @@ using namespace std;
 
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    int myAtoi(string s) {
         
     }
 };

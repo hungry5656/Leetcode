@@ -1,9 +1,11 @@
+#include <iostream>
 #include <string>
 using namespace std;
 
+
 class Solution {
 public:
-    string longestPalindrome(string s) {
+    string convert(string s, int numRows) {
         
     }
 };
