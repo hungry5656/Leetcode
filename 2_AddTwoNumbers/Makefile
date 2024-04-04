@@ -1,3 +1,0 @@
-all: AddTwoNumbers
-
-AddTwoNumbers:
