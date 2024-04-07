@@ -20,7 +20,7 @@ public:
                 sizeStr = 0;
             }
             string currStr = path.substr(startIdx + 1, sizeStr);
-            cout << currStr << endl;
+            // cout << currStr << endl;
             if (currStr.size() == 0 || currStr == ".") {
                 
             } else if (currStr == "..") {
