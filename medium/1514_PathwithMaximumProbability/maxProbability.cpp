@@ -22,8 +22,6 @@ public:
             if (currNode == end_node){
                 return currVal;
             }
-            if (maxProbList[currNode] > currVal)
-                continue;
             for (auto [adjNodeProb, adjNode] : adj[currNode]) {
                 double newProb = adjNodeProb * currVal;
                 // cout <<"newVal: " << newProb << " Node: " << adjNode << endl;
