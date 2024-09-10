@@ -2,6 +2,30 @@ class Solution {
 public:
     int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
         int n = startTime.size();
+        vector<pair<int,pair<int,int>>>vp;
+        for(int i=0;i<n;i++){
+            vp.push_back(make_pair(startTime[i],make_pair(endTime[i],profit[i])));
+        }
+        sort(vp.begin(),vp.end());
+        for(int i=0;i<n;i++){
+            startTime[i]=vp[i].first;
+            endTime[i]=vp[i].second.first;
+            profit[i]=vp[i].second.second;
+        }
+        vector<int> dp (n+1, 0);
+        for (int i = n - 1; i >= 0; i--) {
+            int nextJobIdx = lower_bound(startTime.begin() + i, startTime.end(), endTime[i]) - startTime.begin();
+            dp[i] = max(dp[i + 1], profit[i] + dp[nextJobIdx]);
+        }
+        return dp[0];
+    }
+};
+
+/* original solution:
+class Solution {
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        int n = startTime.size();
         vector<pair<int, int>> endTimeList;
         vector<int> timeList;
         unordered_map<int, int> mp;
@@ -14,9 +38,6 @@ public:
         }
         sort(timeList.begin(), timeList.end());
         sort(endTimeList.begin(), endTimeList.end());
-        // for (auto &lst: timeList) {
-        //     cout << lst << endl;
-        // }
         int timeIdx = 0, currMax = 0;
         for (int i = 0; i < n; ++i) {
             int currIdx = endTimeList[i].second;
@@ -24,21 +45,16 @@ public:
             int currStartTime = startTime[currIdx];
             int currEndTime = endTime[currIdx];
             int timeListElem = timeList[timeIdx];
-            // cout << currEndTime << endl;
             while (timeListElem != currEndTime) {
                 mp[timeListElem] = currMax;
-                // cout << "Key: " << timeListElem << " Val: " << mp[timeListElem] << endl;
                 timeIdx++;
                 timeListElem = timeList[timeIdx];
             }
             mp[currEndTime] = currMax;
             mp[currEndTime] = max(mp[currEndTime], mp[currStartTime] + currProfit);
-            // cout << mp[currEndTime] << endl;
             currMax = mp[currEndTime];
         }
-        // for (auto &elem: mp) {
-        //     cout << "Key: " << elem.first << " Val: " << elem.second << endl;
-        // }
         return mp[timeList.back()];
     }
 };
+*/
